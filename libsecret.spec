@@ -4,7 +4,7 @@
 #
 Name     : libsecret
 Version  : 0.18.5
-Release  : 2
+Release  : 3
 URL      : https://download.gnome.org/core/3.21/3.21.4/sources/libsecret-0.18.5.tar.xz
 Source0  : https://download.gnome.org/core/3.21/3.21.4/sources/libsecret-0.18.5.tar.xz
 Summary  : GObject bindings for Secret Service API
