@@ -4,13 +4,14 @@
 #
 Name     : libsecret
 Version  : 0.18.5
-Release  : 4
+Release  : 5
 URL      : https://download.gnome.org/sources/libsecret/0.18/libsecret-0.18.5.tar.xz
 Source0  : https://download.gnome.org/sources/libsecret/0.18/libsecret-0.18.5.tar.xz
 Summary  : GObject bindings for Secret Service API
 Group    : Development/Tools
-License  : Apache-2.0 GPL-2.0 LGPL-2.1
+License  : Apache-2.0 LGPL-2.1
 Requires: libsecret-bin
+Requires: libsecret-data
 Requires: libsecret-lib
 Requires: libsecret-doc
 Requires: libsecret-locales
@@ -33,9 +34,18 @@ GObject based library for accessing the Secret Service API.
 %package bin
 Summary: bin components for the libsecret package.
 Group: Binaries
+Requires: libsecret-data
 
 %description bin
 bin components for the libsecret package.
+
+
+%package data
+Summary: data components for the libsecret package.
+Group: Data
+
+%description data
+data components for the libsecret package.
 
 
 %package dev
@@ -43,6 +53,7 @@ Summary: dev components for the libsecret package.
 Group: Development
 Requires: libsecret-lib
 Requires: libsecret-bin
+Requires: libsecret-data
 Provides: libsecret-devel
 
 %description dev
@@ -60,6 +71,7 @@ doc components for the libsecret package.
 %package lib
 Summary: lib components for the libsecret package.
 Group: Libraries
+Requires: libsecret-data
 
 %description lib
 lib components for the libsecret package.
@@ -78,7 +90,7 @@ locales components for the libsecret package.
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1490626291
+export SOURCE_DATE_EPOCH=1491323997
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -90,7 +102,7 @@ export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1490626291
+export SOURCE_DATE_EPOCH=1491323997
 rm -rf %{buildroot}
 %make_install
 %find_lang libsecret
@@ -101,6 +113,11 @@ rm -rf %{buildroot}
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/secret-tool
+
+%files data
+%defattr(-,root,root,-)
+/usr/lib64/girepository-1.0/Secret-1.typelib
+/usr/share/gir-1.0/*.gir
 
 %files dev
 %defattr(-,root,root,-)
@@ -117,11 +134,9 @@ rm -rf %{buildroot}
 /usr/include/libsecret-1/libsecret/secret-types.h
 /usr/include/libsecret-1/libsecret/secret-value.h
 /usr/include/libsecret-1/libsecret/secret.h
-/usr/lib64/girepository-1.0/Secret-1.typelib
 /usr/lib64/libsecret-1.so
 /usr/lib64/pkgconfig/libsecret-1.pc
 /usr/lib64/pkgconfig/libsecret-unstable.pc
-/usr/share/gir-1.0/*.gir
 
 %files doc
 %defattr(-,root,root,-)
