@@ -4,7 +4,7 @@
 #
 Name     : libsecret
 Version  : 0.18.6
-Release  : 10
+Release  : 11
 URL      : https://download.gnome.org/sources/libsecret/0.18/libsecret-0.18.6.tar.xz
 Source0  : https://download.gnome.org/sources/libsecret/0.18/libsecret-0.18.6.tar.xz
 Summary  : GObject bindings for Secret Service API
@@ -13,8 +13,11 @@ License  : Apache-2.0 LGPL-2.1
 Requires: libsecret-bin
 Requires: libsecret-data
 Requires: libsecret-lib
-Requires: libsecret-doc
+Requires: libsecret-license
 Requires: libsecret-locales
+Requires: libsecret-man
+BuildRequires : buildreq-gnome
+BuildRequires : dbus-dev
 BuildRequires : docbook-xml
 BuildRequires : gettext
 BuildRequires : gobject-introspection-dev
@@ -29,6 +32,7 @@ BuildRequires : pkgconfig(gio-2.0)
 BuildRequires : pkgconfig(gio-unix-2.0)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : python3
+BuildRequires : vala-dev
 
 %description
 GObject based library for accessing the Secret Service API.
@@ -37,6 +41,8 @@ GObject based library for accessing the Secret Service API.
 Summary: bin components for the libsecret package.
 Group: Binaries
 Requires: libsecret-data
+Requires: libsecret-license
+Requires: libsecret-man
 
 %description bin
 bin components for the libsecret package.
@@ -65,6 +71,7 @@ dev components for the libsecret package.
 %package doc
 Summary: doc components for the libsecret package.
 Group: Documentation
+Requires: libsecret-man
 
 %description doc
 doc components for the libsecret package.
@@ -74,9 +81,18 @@ doc components for the libsecret package.
 Summary: lib components for the libsecret package.
 Group: Libraries
 Requires: libsecret-data
+Requires: libsecret-license
 
 %description lib
 lib components for the libsecret package.
+
+
+%package license
+Summary: license components for the libsecret package.
+Group: Default
+
+%description license
+license components for the libsecret package.
 
 
 %package locales
@@ -87,6 +103,14 @@ Group: Default
 locales components for the libsecret package.
 
 
+%package man
+Summary: man components for the libsecret package.
+Group: Default
+
+%description man
+man components for the libsecret package.
+
+
 %prep
 %setup -q -n libsecret-0.18.6
 
@@ -95,7 +119,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1522340897
+export SOURCE_DATE_EPOCH=1536131574
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -107,8 +131,11 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1522340897
+export SOURCE_DATE_EPOCH=1536131574
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/libsecret
+cp COPYING %{buildroot}/usr/share/doc/libsecret/COPYING
+cp COPYING.TESTS %{buildroot}/usr/share/doc/libsecret/COPYING.TESTS
 %make_install
 %find_lang libsecret
 
@@ -123,6 +150,8 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /usr/lib64/girepository-1.0/Secret-1.typelib
 /usr/share/gir-1.0/*.gir
+/usr/share/vala/vapi/libsecret-1.deps
+/usr/share/vala/vapi/libsecret-1.vapi
 
 %files dev
 %defattr(-,root,root,-)
@@ -144,8 +173,7 @@ rm -rf %{buildroot}
 /usr/lib64/pkgconfig/libsecret-unstable.pc
 
 %files doc
-%defattr(-,root,root,-)
-%doc /usr/share/man/man1/*
+%defattr(0644,root,root,0755)
 /usr/share/gtk-doc/html/libsecret-1/SecretCollection.html
 /usr/share/gtk-doc/html/libsecret-1/SecretItem.html
 /usr/share/gtk-doc/html/libsecret-1/SecretPrompt.html
@@ -208,6 +236,15 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /usr/lib64/libsecret-1.so.0
 /usr/lib64/libsecret-1.so.0.0.0
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/libsecret/COPYING
+/usr/share/doc/libsecret/COPYING.TESTS
+
+%files man
+%defattr(-,root,root,-)
+/usr/share/man/man1/secret-tool.1
 
 %files locales -f libsecret.lang
 %defattr(-,root,root,-)

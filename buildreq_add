@@ -5,3 +5,4 @@ libgcrypt-dev
 libgpg-error-dev
 libxslt-bin
 gobject-introspection-dev
+vala-dev
