@@ -4,7 +4,7 @@
 #
 Name     : libsecret
 Version  : 0.18.7
-Release  : 13
+Release  : 14
 URL      : https://download.gnome.org/sources/libsecret/0.18/libsecret-0.18.7.tar.xz
 Source0  : https://download.gnome.org/sources/libsecret/0.18/libsecret-0.18.7.tar.xz
 Summary  : GObject bindings for Secret Service API
@@ -20,6 +20,7 @@ BuildRequires : buildreq-gnome
 BuildRequires : dbus-dev
 BuildRequires : docbook-xml
 BuildRequires : gettext
+BuildRequires : gjs
 BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
@@ -30,6 +31,7 @@ BuildRequires : perl(XML::Parser)
 BuildRequires : pkgconfig(gio-2.0)
 BuildRequires : pkgconfig(gio-unix-2.0)
 BuildRequires : pkgconfig(glib-2.0)
+BuildRequires : pygobject
 BuildRequires : python3
 BuildRequires : vala-dev
 
@@ -118,7 +120,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1546126222
+export SOURCE_DATE_EPOCH=1546126418
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -130,7 +132,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1546126222
+export SOURCE_DATE_EPOCH=1546126418
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libsecret
 cp COPYING %{buildroot}/usr/share/package-licenses/libsecret/COPYING
