@@ -1,3 +1,19 @@
+0.20.2
+ * secret-file-collection: force little-endian in GVariant [!49, #42]
+ * Prefer g_info() over g_message() [!48, #40]
+ * meson: Don't specify shared_library() [!47]
+ * docs: Make sure to set install: true [!46]
+
+0.20.1
+ * Build fixes [!45]
+
+0.20.0
+ * secret-backend: New interface to represent password storage backend [!34]
+ * secret-backend: Add local-storage backend [!6]
+ * item: Port to GTask [!43]
+ * Build fixes [!34, !37, !38, !40, !41, !42, ...]
+ * Updated translations
+
 0.19.1
  * service: Fix secret_service_ensure_session_finish error propagation [!36]
 
