@@ -1,10 +1,12 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
-python3
+dbus-dev
+dbus-python
+gjs
+gobject-introspection-dev
 libgcrypt-dev
 libgpg-error-dev
 libxslt-bin
-gobject-introspection-dev
-vala-dev
-gjs
 pygobject
+python3
+vala-dev
