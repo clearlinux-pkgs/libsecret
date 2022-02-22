@@ -203,7 +203,6 @@ libsecret-1.so.0:_secret_util_get_properties
 libsecret-1.so.0:_secret_util_get_properties_finish
 libsecret-1.so.0:_secret_util_have_cached_properties
 libsecret-1.so.0:_secret_util_parent_path
-libsecret-1.so.0:_secret_util_propagate_error
 libsecret-1.so.0:_secret_util_set_property
 libsecret-1.so.0:_secret_util_set_property_finish
 libsecret-1.so.0:_secret_util_set_property_sync

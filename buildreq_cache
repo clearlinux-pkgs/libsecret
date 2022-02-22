@@ -1,0 +1,6 @@
+0.20.5
+docbook-xml
+pkgconfig(tss2-esys)
+pkgconfig(tss2-mu)
+pkgconfig(tss2-rc)
+pkgconfig(tss2-tctildr)
