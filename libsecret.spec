@@ -4,10 +4,10 @@
 # Using build pattern: meson
 #
 Name     : libsecret
-Version  : 0.20.5
-Release  : 27
-URL      : https://download.gnome.org/sources/libsecret/0.20/libsecret-0.20.5.tar.xz
-Source0  : https://download.gnome.org/sources/libsecret/0.20/libsecret-0.20.5.tar.xz
+Version  : 0.21.0
+Release  : 28
+URL      : https://download.gnome.org/sources/libsecret/0.21/libsecret-0.21.0.tar.xz
+Source0  : https://download.gnome.org/sources/libsecret/0.21/libsecret-0.21.0.tar.xz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0 LGPL-2.1
@@ -112,25 +112,30 @@ man components for the libsecret package.
 
 
 %prep
-%setup -q -n libsecret-0.20.5
-cd %{_builddir}/libsecret-0.20.5
+%setup -q -n libsecret-0.21.0
+cd %{_builddir}/libsecret-0.21.0
+pushd ..
+cp -a libsecret-0.21.0 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1680039107
+export SOURCE_DATE_EPOCH=1691774186
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Dgtk_doc=false  builddir
 ninja -v -C builddir
+CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -O3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Dgtk_doc=false  builddiravx2
+ninja -v -C builddiravx2
 
 %check
 export LANG=C.UTF-8
@@ -143,14 +148,17 @@ dbus-run-session meson test -C builddir || :
 mkdir -p %{buildroot}/usr/share/package-licenses/libsecret
 cp %{_builddir}/libsecret-%{version}/COPYING %{buildroot}/usr/share/package-licenses/libsecret/7c7d178d9ce31b21a4869940a881b043b086f007 || :
 cp %{_builddir}/libsecret-%{version}/COPYING.TESTS %{buildroot}/usr/share/package-licenses/libsecret/22e01c37d5bbe7f728acd042bb9d6972081bfb48 || :
+DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang libsecret
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/secret-tool
 /usr/bin/secret-tool
 
 %files data
@@ -184,6 +192,7 @@ DESTDIR=%{buildroot} ninja -C builddir install
 
 %files lib
 %defattr(-,root,root,-)
+/V3/usr/lib64/libsecret-1.so.0.0.0
 /usr/lib64/libsecret-1.so.0
 /usr/lib64/libsecret-1.so.0.0.0
 
