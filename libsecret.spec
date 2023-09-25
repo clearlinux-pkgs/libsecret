@@ -4,10 +4,10 @@
 # Using build pattern: meson
 #
 Name     : libsecret
-Version  : 0.21.0
-Release  : 28
-URL      : https://download.gnome.org/sources/libsecret/0.21/libsecret-0.21.0.tar.xz
-Source0  : https://download.gnome.org/sources/libsecret/0.21/libsecret-0.21.0.tar.xz
+Version  : 0.21.1
+Release  : 29
+URL      : https://download.gnome.org/sources/libsecret/0.21/libsecret-0.21.1.tar.xz
+Source0  : https://download.gnome.org/sources/libsecret/0.21/libsecret-0.21.1.tar.xz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0 LGPL-2.1
@@ -112,10 +112,10 @@ man components for the libsecret package.
 
 
 %prep
-%setup -q -n libsecret-0.21.0
-cd %{_builddir}/libsecret-0.21.0
+%setup -q -n libsecret-0.21.1
+cd %{_builddir}/libsecret-0.21.1
 pushd ..
-cp -a libsecret-0.21.0 buildavx2
+cp -a libsecret-0.21.1 buildavx2
 popd
 
 %build
@@ -123,7 +123,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1691774186
+export SOURCE_DATE_EPOCH=1695665712
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
